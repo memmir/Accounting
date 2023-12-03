@@ -28,8 +28,8 @@ data class Account(
         @JoinColumn(name = "customer_id", nullable = false)              // CascadeType.ALL --> ALL dediğimizde birbiri ile bağlı tablolardaki verilerden birisi güncellendi(yazma,silme,günc) ise git diğer tabloda da aynı işlemi yapmayı sağlıyor.
         val customer: Customer?,
 
-       /* @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
-        val transaction: Set<Transaction>? */
+       @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+        val transaction: Set<Transaction>?
 
 
 
