@@ -20,7 +20,7 @@ data class Account(
         // oluşturulacak timespend' i alır ve ona göre bir hashcode üretir. Hashcode özelliği data class(kotlin) den geliyor.
         //UUID sadece unique ve tahmin edilemeyen bir id olmasını sağlıyor.
         @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-        val id: String?, // gerekmediği sürece 'var' kullanılmamalı. 'val' immutable olmasının sağlıyor.
+        val id: String? = "", // gerekmediği sürece 'var' kullanılmamalı. 'val' immutable olmasının sağlıyor.
         val balance: BigDecimal?  = BigDecimal.ZERO,
         val creationDate: LocalDateTime,
 
@@ -29,11 +29,18 @@ data class Account(
         val customer: Customer?,
 
        @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
-        val transaction: Set<Transaction>?
+        val transaction: Set<Transaction> = HashSet()
 
 
 
 ) {
+        constructor(customer: Customer, balance: BigDecimal, creationDate: LocalDateTime) : this(
+                "",
+                customer = customer,
+                balance = balance,
+                creationDate = creationDate
+        )
+
         //Generate equals and hashcode yaptık. Kendi equals() ve hashCode() metodlarımızı yazdık.
         override fun equals(other: Any?): Boolean {
                 if (this === other) return true
