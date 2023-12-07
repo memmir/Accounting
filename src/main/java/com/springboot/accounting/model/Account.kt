@@ -1,6 +1,7 @@
 package com.springboot.accounting.model
 
 import jakarta.persistence.*
+import org.hibernate.annotations.Cascade
 import org.hibernate.annotations.GenericGenerator
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -28,7 +29,7 @@ data class Account(
         @JoinColumn(name = "customer_id", nullable = false)              // CascadeType.ALL --> ALL dediğimizde birbiri ile bağlı tablolardaki verilerden birisi güncellendi(yazma,silme,günc) ise git diğer tabloda da aynı işlemi yapmayı sağlıyor.
         val customer: Customer?,
 
-       @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+       @OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
         val transaction: Set<Transaction> = HashSet()
 
 
