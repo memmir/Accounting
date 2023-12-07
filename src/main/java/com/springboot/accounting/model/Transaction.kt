@@ -49,7 +49,6 @@ data class Transaction(
                 result = 31 * result + (transactionType?.hashCode() ?: 0)
                 result = 31 * result + (amount?.hashCode() ?: 0)
                 result = 31 * result + (transactionDate?.hashCode() ?: 0)
-                result = 31 * result + account.hashCode()
                 return result
         }
 }

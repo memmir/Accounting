@@ -23,7 +23,7 @@ public class AccountingApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		Customer customer = customerRepository.save(new Customer("Cagri", "Dursun"));
+		Customer customer = customerRepository.save(new Customer("Mahmut", "Emir"));
 		System.out.println(customer);
 	}
 

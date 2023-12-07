@@ -16,13 +16,11 @@ import java.time.LocalDateTime;
 public class AccountService {
     private final AccountRepository accountRepository;
     private final CustomerService customerService;
-    private final TransactionService transactionService;
     private final AccountDtoConverter accountDtoConverter;
 
-    public AccountService(AccountRepository accountRepository, CustomerService customerService, TransactionService transactionService, AccountDtoConverter accountDtoConverter) {
+    public AccountService(AccountRepository accountRepository, CustomerService customerService, AccountDtoConverter accountDtoConverter) {
         this.accountRepository = accountRepository;
         this.customerService = customerService;
-        this.transactionService = transactionService;
         this.accountDtoConverter = accountDtoConverter;
     }
 
@@ -35,7 +33,10 @@ public class AccountService {
                 LocalDateTime.now());
 
         if(createAccountRequest.getInitialCredit().compareTo(BigDecimal.ZERO) > 0){
-            Transaction transaction = transactionService.initiateMoney(account, createAccountRequest.getInitialCredit());
+            //Transaction transaction = transactionService.initiateMoney(account, createAccountRequest.getInitialCredit());
+            Transaction transaction = new Transaction(
+                    createAccountRequest.getInitialCredit(),
+                    account);
             account.getTransaction().add(transaction);
         }
         Account newAccount = accountRepository.save(account);

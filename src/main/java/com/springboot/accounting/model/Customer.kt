@@ -43,7 +43,6 @@ data class Customer(
                 var result = id?.hashCode() ?: 0
                 result = 31 * result + (name?.hashCode() ?: 0)
                 result = 31 * result + (surname?.hashCode() ?: 0)
-                result = 31 * result + accounts.hashCode()
                 return result
         }
 
