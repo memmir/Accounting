@@ -60,4 +60,16 @@ public class CustomerServiceTest {
 
         assertEquals(result,customerDto);
     }
+    @Test
+    public void testGetCustomerById_whenCustomerIdDoesNotExists_shouldThrowCustomerNotFoundException(){
+
+        Mockito.when(customerRepository.findById("id")).thenReturn(Optional.empty());
+
+        assertThrows(CustomerNotFoundException.class, () -> customerService.getCustomerById("id"));
+
+        //converter ın hiçbir metodunu çağırma demek. Converter ın hiçbir metodu çağırılmadı demek.
+        Mockito.verifyNoInteractions(customerDtoConverter);
+
+
+    }
 }
