@@ -1,6 +1,7 @@
 package com.springboot.accounting.service;
 
 import com.springboot.accounting.dto.CustomerDtoConverter;
+import com.springboot.accounting.exception.CustomerNotFoundException;
 import com.springboot.accounting.model.Customer;
 import com.springboot.accounting.repository.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,5 +37,17 @@ public class CustomerServiceTest {
         Customer result = customerService.findCustomerById("id");
 
         assertEquals(result,customer);
+    }
+
+    @Test
+    public void testFindByCustomerId_whenCustomerIdDoesNotExists_shouldThrowCustomerNotFoundException(){
+
+        Mockito.when(customerRepository.findById("id")).thenReturn(Optional.empty());
+
+        assertThrows(CustomerNotFoundException.class, () -> customerService.findCustomerById("id"));
+
+
+
+
     }
 }
