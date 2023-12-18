@@ -9,5 +9,5 @@ RUN ./mvnw package
 
 FROM openjdk:17
 WORKDIR Accounting-api
-COPY --from=build target/*.jar account-api.jar
+COPY --from=build target/*.jar Accounting-api.jar
 ENTRYPOINT ["java", "-jar", "Accounting-api.jar"]
