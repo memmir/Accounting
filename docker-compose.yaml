@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  app:
+    image: 'accounting:latest'
+    build:
+      context: .
+    container_name: accounting
+    ports:
+      - 9090:8080

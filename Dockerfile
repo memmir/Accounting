@@ -11,3 +11,6 @@ FROM openjdk:17
 WORKDIR Accounting-api
 COPY --from=build target/*.jar Accounting-api.jar
 ENTRYPOINT ["java", "-jar", "Accounting-api.jar"]
+
+#Docker container oluşturma
+# docker run --name account -d -p 9090:8080 accounting:1.0
