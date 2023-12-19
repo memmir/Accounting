@@ -5,8 +5,8 @@ import jakarta.validation.constraints.NotBlank
 import java.math.BigDecimal
 
 data class CreateAccountRequest(
-        @field:NotBlank //Boş olamaz
+        @field:NotBlank(message = "CustomerId must not be empty") //Boş olamaz
         val customerId: String,
-        @field:Min(0) //0 olamaz
+        @field:Min(0, message = "Initial Credit value must not be negative value") //0 olamaz
         val initialCredit: BigDecimal
 )
