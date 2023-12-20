@@ -5,7 +5,9 @@ import com.springboot.accounting.repository.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
+import java.time.Clock;
 import java.util.HashSet;
 
 @SpringBootApplication
@@ -19,6 +21,11 @@ public class AccountingApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AccountingApplication.class, args);
+	}
+
+	@Bean
+	public Clock clock() {
+		return Clock.systemUTC();
 	}
 
 	@Override
