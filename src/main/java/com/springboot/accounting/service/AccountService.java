@@ -10,18 +10,25 @@ import com.springboot.accounting.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.UUID;
+import java.util.function.Supplier;
 
 @Service
 public class AccountService {
     private final AccountRepository accountRepository;
     private final CustomerService customerService;
     private final AccountDtoConverter accountDtoConverter;
+    private final Clock clock;
 
-    public AccountService(AccountRepository accountRepository, CustomerService customerService, AccountDtoConverter accountDtoConverter) {
+    public AccountService(AccountRepository accountRepository, CustomerService customerService, AccountDtoConverter accountDtoConverter, Clock clock) {
         this.accountRepository = accountRepository;
         this.customerService = customerService;
         this.accountDtoConverter = accountDtoConverter;
+        this.clock = clock;
+
     }
 
     public AccountDto createAccount(CreateAccountRequest createAccountRequest){
@@ -30,7 +37,7 @@ public class AccountService {
         Account account = new Account(
                 customer,
                 createAccountRequest.getInitialCredit(),
-                LocalDateTime.now());
+                getLocalDateTimeNow());
 
         if(createAccountRequest.getInitialCredit().compareTo(BigDecimal.ZERO) > 0){
             //Transaction transaction = transactionService.initiateMoney(account, createAccountRequest.getInitialCredit());
@@ -42,5 +49,11 @@ public class AccountService {
         Account newAccount = accountRepository.save(account);
         return accountDtoConverter.convert(newAccount);
     }
+    private LocalDateTime getLocalDateTimeNow(){
+        Instant instant = clock.instant();
+        return LocalDateTime.ofInstant(instant, Clock.systemDefaultZone().getZone());
+
+    }
+
 
 }
