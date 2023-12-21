@@ -1,15 +1,16 @@
-FROM openjdk:17 AS build
+#FROM openjdk:17 AS build
 
-COPY pom.xml mvnw ./
-COPY .mvn .mvn
-RUN ./mvnw dependency:resolve
+#COPY pom.xml mvnw ./
+#COPY .mvn .mvn
+#RUN ./mvnw dependency:resolve
 
-COPY src src
-RUN ./mvnw package
+#COPY src src
+#RUN ./mvnw package
 
 FROM openjdk:17
 WORKDIR Accounting-api
-COPY --from=build target/*.jar Accounting-api.jar
+COPY target/Accounting-0.0.1-SNAPSHOT.jar Accounting-api.jar
+EXPOSE 9090
 ENTRYPOINT ["java", "-jar", "Accounting-api.jar"]
 
 #Docker container çalıştırma
